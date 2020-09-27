@@ -1,0 +1,29 @@
+#Author: gymR4t
+
+#No Beacon Response 5+ Minutes (300000ms)
+$yellow_time = 300000;
+
+#No Beacon Response 30+ Minutes (1800000ms)
+$red_time = 1800000;
+
+#Checks Beacons Every Minute and Highlights Stale Beacons
+on heartbeat_1m {
+  local('@white_beacons');
+  local('@yellow_beacons');
+  local('@red_beacons');
+
+  foreach $beacon (beacons()){
+    if (($beacon["last"] >= $yellow_time) && ($beacon["last"] < $red_time)){
+      push(@yellow_beacons, $beacon);
+    }
+    else if ($beacon["last"] >= $red_time){
+      push(@red_beacons, $beacon);
+    }
+    else{
+      push(@white_beacons, $beacon);
+    }
+  }
+  highlight("beacons", @white_beacons, "")
+  highlight("beacons", @yellow_beacons, "neutral");
+  highlight("beacons", @red_beacons, "bad");
+}
