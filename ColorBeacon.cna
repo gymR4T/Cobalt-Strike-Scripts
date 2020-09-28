@@ -6,7 +6,7 @@ $yellow_time = 300000;
 #No Beacon Response 30+ Minutes (1800000ms)
 $red_time = 1800000;
 
-#Checks Beacons Every Minute and Highlights Stale Beacons
+#Checks Beacons Every 30 Seconds and Highlights Stale Beacons
 on heartbeat_30s {
   local('@white_beacons');
   local('@yellow_beacons');
